@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Nueva persona | CRUD{% endblock %}
+{% block content %}
+<section class="form-heading">
+    <p class="eyebrow">NUEVO REGISTRO</p>
+    <h1>Registrar persona</h1>
+    <p class="muted">Completa los datos del formulario.</p>
+</section>
+<div class="panel form-panel">
+    <form method="POST">
+        <label for="name">Nombre completo <span>*</span></label>
+        <input id="name" name="name" type="text" maxlength="100" required
+               value="{{ request.form.get('name', '') }}" placeholder="Ej. María Pérez">
+
+        <label for="email">Correo electrónico <span>*</span></label>
+        <input id="email" name="email" type="email" maxlength="120" required
+               value="{{ request.form.get('email', '') }}" placeholder="correo@ejemplo.com">
+
+        <label for="phone">Teléfono</label>
+        <input id="phone" name="phone" type="text" maxlength="30"
+               value="{{ request.form.get('phone', '') }}" placeholder="Ej. 3001234567">
+
+        <div class="form-actions">
+            <a class="button secondary" href="{{ url_for('index') }}">Cancelar</a>
+            <button class="button primary" type="submit">Guardar persona</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

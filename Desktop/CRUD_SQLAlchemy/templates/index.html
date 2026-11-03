@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Personas | CRUD{% endblock %}
+{% block content %}
+<section class="heading">
+    <div>
+        <p class="eyebrow">GESTIÓN DE REGISTROS</p>
+        <h1>Personas registradas</h1>
+        <p class="muted">Consulta, edita o elimina los registros guardados.</p>
+    </div>
+    <a class="button primary" href="{{ url_for('crear') }}">＋ Registrar persona</a>
+</section>
+
+<div class="panel">
+    {% if people %}
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Teléfono</th><th>Acciones</th></tr>
+            </thead>
+            <tbody>
+                {% for person in people %}
+                <tr>
+                    <td>{{ person.id }}</td>
+                    <td class="name-cell">{{ person.name }}</td>
+                    <td>{{ person.email }}</td>
+                    <td>{{ person.phone or "—" }}</td>
+                    <td>
+                        <div class="actions">
+                            <a class="button small secondary" href="{{ url_for('editar', person_id=person.id) }}">Editar</a>
+                            <form method="POST" action="{{ url_for('eliminar', person_id=person.id) }}"
+                                  onsubmit="return confirm('¿Seguro que deseas eliminar este registro?');">
+                                <button class="button small danger" type="submit">Eliminar</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty">
+        <div class="empty-icon">♙</div>
+        <h2>Aún no hay personas</h2>
+        <p class="muted">Registra la primera persona para comenzar.</p>
+        <a class="button primary" href="{{ url_for('crear') }}">Crear primer registro</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
