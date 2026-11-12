@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SENA Support | Mesa de ayuda TIC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">S</div>
+        <div><strong>SENA <span>SUPPORT</span></strong><small>Mesa de ayuda TIC</small></div>
+      </div>
+      <div class="nav-caption">MENÚ PRINCIPAL</div>
+      <nav class="nav-menu">
+        <button class="nav-link active" data-page="dashboard"><span class="nav-icon">▦</span> Dashboard</button>
+        <button class="nav-link" data-page="new-ticket"><span class="nav-icon">＋</span> Asignación de soportes</button>
+        <button class="nav-link" data-page="assigned"><span class="nav-icon">▤</span> Soportes asignados <span class="nav-count" id="assignedCount">0</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card">
+          <div class="help-icon">?</div>
+          <strong>¿Necesitas ayuda?</strong>
+          <p>Consulta con el administrador del sistema.</p>
+        </div>
+        <div class="profile-mini">
+          <div class="avatar">AT</div>
+          <div><strong>Administrador TIC</strong><small>Administrador</small></div>
+          <span class="dots">•••</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Abrir menú">☰</button>
+        <div class="breadcrumb">Inicio <span>/</span> <strong id="crumb">Dashboard</strong></div>
+        <div class="top-actions">
+          <div class="date-chip"><span>◷</span> <span id="today"></span></div>
+          <button class="icon-button notification" title="Notificaciones">♧<i></i></button>
+          <div class="top-user"><div class="avatar">AT</div><div><strong>Administrador</strong><small>Área TIC</small></div></div>
+        </div>
+      </header>
+
+      <section class="page active" id="page-dashboard">
+        <div class="page-heading">
+          <div><p class="eyebrow">CENTRO DE CONTROL</p><h1>Dashboard</h1><p class="subtitle">Bienvenido. Aquí puedes supervisar las solicitudes de soporte TIC.</p></div>
+          <button class="primary-button" data-go="new-ticket">＋ Nueva solicitud</button>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-top"><span>Total de solicitudes</span><span class="stat-icon green">▤</span></div><div class="stat-value" id="totalStat">0</div><div class="stat-foot">Solicitudes registradas</div></article>
+          <article class="stat-card"><div class="stat-top"><span>Casos nuevos</span><span class="stat-icon blue">✦</span></div><div class="stat-value" id="newStat">0</div><div class="stat-foot"><span class="dot blue-dot"></span> Requieren revisión</div></article>
+          <article class="stat-card"><div class="stat-top"><span>Pendientes</span><span class="stat-icon orange">◷</span></div><div class="stat-value" id="pendingStat">0</div><div class="stat-foot"><span class="dot orange-dot"></span> En espera de atención</div></article>
+          <article class="stat-card"><div class="stat-top"><span>Finalizados</span><span class="stat-icon purple">✓</span></div><div class="stat-value" id="doneStat">0</div><div class="stat-foot"><span class="dot purple-dot"></span> Casos solucionados</div></article>
+        </div>
+
+        <div class="content-grid">
+          <section class="panel recent-panel">
+            <div class="panel-heading"><div><h2>Solicitudes recientes</h2><p>Últimos reportes registrados en el sistema</p></div><button class="text-button" data-go="assigned">Ver todas <span>→</span></button></div>
+            <div class="table-wrap"><table><thead><tr><th>RADICADO</th><th>SOLICITANTE</th><th>TIPO DE NOVEDAD</th><th>ESTADO</th></tr></thead><tbody id="recentRows"></tbody></table></div>
+          </section>
+          <section class="panel status-panel">
+            <div class="panel-heading"><div><h2>Estado de solicitudes</h2><p>Distribución de los casos</p></div></div>
+            <div class="status-summary" id="statusSummary"></div>
+            <div class="status-legend">
+              <div><i class="legend-dot blue-dot"></i> Nuevos</div><div><i class="legend-dot orange-dot"></i> Pendientes</div>
+              <div><i class="legend-dot purple-dot"></i> En proceso</div><div><i class="legend-dot green-dot"></i> Finalizados</div>
+            </div>
+          </section>
+        </div>
+        <div class="notice-strip"><div class="notice-symbol">i</div><div><strong>Panel de demostración</strong><p>Esta versión guarda los registros temporalmente en el navegador. En la siguiente etapa conectaremos usuarios, técnicos y solicitudes a una base de datos.</p></div></div>
+      </section>
+
+      <section class="page" id="page-new-ticket">
+        <div class="page-heading"><div><p class="eyebrow">GESTIÓN DE MESA DE AYUDA</p><h1>Asignación de soportes</h1><p class="subtitle">Registra una novedad y asígnala al personal técnico correspondiente.</p></div></div>
+        <div class="form-layout">
+          <form class="panel ticket-form" id="ticketForm">
+            <div class="panel-heading form-title"><div><h2>Registrar nueva solicitud</h2><p>Completa la información del reporte</p></div><span class="required-note">* Campos obligatorios</span></div>
+            <div class="form-section-title">Información del solicitante</div>
+            <div class="form-grid">
+              <label>Nombre completo <em>*</em><input name="requester" required placeholder="Ej. Juan Sebastián Velásquez"></label>
+              <label>Correo institucional <em>*</em><input name="email" type="email" required placeholder="nombre@soy.sena.edu.co"></label>
+              <label>Tipo de usuario <em>*</em><select name="userType" required><option value="">Seleccionar tipo</option><option>Aprendiz</option><option>Instructor</option><option>Funcionario</option><option>Contratista</option></select></label>
+              <label>Ficha / Área <input name="area" placeholder="Ej. ADSO - Ficha 000000"></label>
+            </div>
+            <div class="form-section-title separated">Detalle de la novedad</div>
+            <div class="form-grid">
+              <label>Tipo de soporte <em>*</em><select name="category" required><option value="">Seleccionar categoría</option><option>Equipo de cómputo</option><option>Conectividad / Internet</option><option>Software / Aplicaciones</option><option>Impresora / Periféricos</option><option>Cuenta / Accesos</option><option>Otro</option></select></label>
+              <label>Ubicación / Ambiente <em>*</em><input name="location" required placeholder="Ej. Ambiente 204 - Bloque B"></label>
+              <label>Equipo relacionado <input name="equipment" placeholder="Ej. PC de escritorio, inventario..."></label>
+              <label>Prioridad <em>*</em><select name="priority" required><option value="Media">Media</option><option value="Baja">Baja</option><option value="Alta">Alta</option><option value="Crítica">Crítica</option></select></label>
+              <label class="full">Descripción del problema <em>*</em><textarea name="description" required rows="4" placeholder="Describe qué sucede, desde cuándo ocurre y qué intentaste hacer..."></textarea></label>
+            </div>
+            <div class="form-section-title separated">Asignación del soporte</div>
+            <div class="form-grid">
+              <label class="full">Técnico responsable <select name="technician"><option value="">Por asignar / Mesa TIC</option><option>Andrés Martínez</option><option>Laura Gómez</option><option>Carlos Rodríguez</option></select></label>
+            </div>
+            <div class="form-actions"><button type="reset" class="secondary-button">Limpiar formulario</button><button type="submit" class="primary-button">Registrar solicitud <span>→</span></button></div>
+          </form>
+          <aside class="side-info">
+            <div class="info-card green-info"><div class="info-icon">✦</div><h3>Ten en cuenta</h3><p>Describe la novedad con claridad. Esto ayudará al equipo TIC a identificar y solucionar el inconveniente más rápido.</p></div>
+            <div class="info-card"><h3>Flujo de atención</h3><div class="mini-steps"><div><b>1</b><span><strong>Registro</strong><small>Se crea el radicado</small></span></div><div><b>2</b><span><strong>Asignación</strong><small>Se designa un técnico</small></span></div><div><b>3</b><span><strong>Atención</strong><small>Se trabaja en la solución</small></span></div><div><b>4</b><span><strong>Cierre</strong><small>Se documenta el resultado</small></span></div></div></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="page" id="page-assigned">
+        <div class="page-heading"><div><p class="eyebrow">SEGUIMIENTO Y CONTROL</p><h1>Soportes asignados</h1><p class="subtitle">Consulta, filtra y actualiza las solicitudes registradas.</p></div><button class="primary-button" data-go="new-ticket">＋ Nueva solicitud</button></div>
+        <section class="panel tickets-panel">
+          <div class="filters">
+            <div class="search-box"><span>⌕</span><input id="searchInput" placeholder="Buscar por radicado, solicitante o novedad..."></div>
+            <select id="statusFilter"><option value="">Todos los estados</option><option>Nuevo</option><option>Pendiente</option><option>En proceso</option><option>Finalizado</option></select>
+            <select id="priorityFilter"><option value="">Todas las prioridades</option><option>Crítica</option><option>Alta</option><option>Media</option><option>Baja</option></select>
+          </div>
+          <div class="table-wrap"><table class="tickets-table"><thead><tr><th>RADICADO</th><th>SOLICITANTE</th><th>NOVEDAD</th><th>PRIORIDAD</th><th>TÉCNICO</th><th>ESTADO</th><th>ACCIÓN</th></tr></thead><tbody id="ticketRows"></tbody></table></div>
+          <div class="table-bottom"><span id="resultCount">0 solicitudes</span><span>Datos de demostración</span></div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="detailModal">
+    <div class="modal">
+      <div class="modal-header"><div><p class="eyebrow">DETALLE DE SOLICITUD</p><h2 id="modalTitle">Solicitud</h2></div><button class="close-modal" id="closeModal">×</button></div>
+      <div id="modalBody"></div>
+      <div class="modal-actions"><button class="secondary-button" id="closeModal2">Cerrar</button><button class="primary-button" id="saveStatus">Guardar cambios</button></div>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
